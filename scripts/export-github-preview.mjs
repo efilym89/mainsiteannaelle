@@ -8,7 +8,7 @@ const outputDir = path.resolve(process.argv[3] ?? path.join(projectRoot, "docs")
 const basePath = `/${(process.env.GITHUB_PAGES_BASE_PATH ?? "mainsiteannaelle")
   .replace(/^\/+|\/+$/g, "")}`;
 
-const routes = [
+const rootRoutes = [
   "/",
   "/services",
   "/prices",
@@ -20,6 +20,33 @@ const routes = [
   "/contacts",
   "/booking",
 ];
+
+const routes = [
+  ...rootRoutes,
+  ...["uz", "en"].flatMap((locale) =>
+    rootRoutes.map((route) => `/${locale}${route === "/" ? "" : route}`),
+  ),
+];
+
+const previewAssetVersion = "20260811-3";
+
+const previewCopy = {
+  ru: {
+    banner: "Тестовая версия для команды · отправка заявок отключена",
+  },
+  uz: {
+    banner: "Jamoa uchun test versiyasi · so‘rov yuborish o‘chirilgan",
+  },
+  en: {
+    banner: "Team preview · form submission is disabled",
+  },
+};
+
+function localeForRoute(route) {
+  if (route === "/uz" || route.startsWith("/uz/")) return "uz";
+  if (route === "/en" || route.startsWith("/en/")) return "en";
+  return "ru";
+}
 
 const previewCss = `
 .github-preview-banner {
@@ -58,10 +85,29 @@ body { padding-top: 34px; }
   opacity: 1;
 }
 
+html[data-github-preview="true"] .mobile-nav[hidden],
+html[data-github-preview="true"] .mobile-nav:not(.is-open) {
+  display: none !important;
+}
+
+@media (max-width: 1240px) {
+  html[data-github-preview="true"] .mobile-nav,
+  html[data-github-preview="true"] .mobile-nav.is-open {
+    max-height: calc(100vh - 110px);
+    max-height: calc(100dvh - 110px - env(safe-area-inset-bottom));
+  }
+}
+
 @media (max-width: 780px) {
   .github-preview-banner { min-height: 42px; font-size: 11px; }
   body { padding-top: 42px; }
   .site-header { top: 42px; }
+
+  html[data-github-preview="true"] .mobile-nav,
+  html[data-github-preview="true"] .mobile-nav.is-open {
+    max-height: calc(100vh - 114px);
+    max-height: calc(100dvh - 114px - env(safe-area-inset-bottom));
+  }
 }
 `;
 
@@ -69,12 +115,32 @@ const previewJs = `(() => {
   const header = document.querySelector('.site-header');
   const menuButton = document.querySelector('.menu-button');
   const desktopNav = document.querySelector('.desktop-nav');
+  const languageSwitcher = document.querySelector('.desktop-language-switcher');
+  const previewLanguage = document.documentElement.lang.startsWith('uz')
+    ? 'uz'
+    : document.documentElement.lang.startsWith('en')
+      ? 'en'
+      : 'ru';
+  const menuLabels = {
+    ru: { open: 'Открыть меню', close: 'Закрыть меню' },
+    uz: { open: 'Menyuni ochish', close: 'Menyuni yopish' },
+    en: { open: 'Open menu', close: 'Close menu' },
+  }[previewLanguage];
 
   if (header && menuButton && desktopNav && !document.getElementById('mobile-navigation')) {
     const mobileNav = document.createElement('nav');
     mobileNav.className = 'mobile-nav';
     mobileNav.id = 'mobile-navigation';
-    mobileNav.setAttribute('aria-label', 'Мобильная навигация');
+    mobileNav.hidden = true;
+    mobileNav.setAttribute('aria-hidden', 'true');
+    mobileNav.setAttribute('aria-label', desktopNav.getAttribute('aria-label') || 'Navigation');
+
+    if (languageSwitcher) {
+      const mobileLanguages = languageSwitcher.cloneNode(true);
+      mobileLanguages.classList.remove('desktop-language-switcher');
+      mobileLanguages.classList.add('mobile-language-switcher');
+      mobileNav.append(mobileLanguages);
+    }
 
     desktopNav.querySelectorAll('a').forEach((link) => {
       mobileNav.append(link.cloneNode(true));
@@ -92,8 +158,10 @@ const previewJs = `(() => {
     const setOpen = (open) => {
       menuButton.classList.toggle('is-open', open);
       mobileNav.classList.toggle('is-open', open);
+      mobileNav.hidden = !open;
+      mobileNav.setAttribute('aria-hidden', String(!open));
       menuButton.setAttribute('aria-expanded', String(open));
-      menuButton.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+      menuButton.setAttribute('aria-label', open ? menuLabels.close : menuLabels.open);
       document.body.toggleAttribute('data-navigation-open', open);
     };
 
@@ -109,19 +177,49 @@ const previewJs = `(() => {
         menuButton.focus();
       }
     });
+    window.addEventListener('pageshow', () => setOpen(false));
+    setOpen(false);
   }
+
+  const copy = {
+    ru: {
+      formNote: 'Это визуальная тестовая версия. Заявка не будет отправлена.',
+      submit: 'Отправка отключена в тестовой версии',
+      tabTitle: 'Интерактивное переключение доступно в рабочей версии',
+      priceNote: 'В тестовой версии показан базовый прайс. Интерактивные вкладки доступны в рабочей версии.',
+    },
+    uz: {
+      formNote: 'Bu vizual test versiyasi. So‘rov yuborilmaydi.',
+      submit: 'Test versiyasida yuborish o‘chirilgan',
+      tabTitle: 'Interaktiv almashtirish ishchi versiyada mavjud',
+      priceNote: 'Test versiyasida asosiy narxlar ko‘rsatilgan. Interaktiv bo‘limlar ishchi versiyada mavjud.',
+    },
+    en: {
+      formNote: 'This is a visual preview. The request will not be submitted.',
+      submit: 'Submission disabled in preview',
+      tabTitle: 'Interactive switching is available on the live site',
+      priceNote: 'The preview shows the base price list. Interactive tabs are available on the live site.',
+    },
+  }[previewLanguage];
+
+  document.querySelectorAll('.language-switcher a').forEach((link) => {
+    const target = new URL(link.href, window.location.href);
+    if (!target.search) target.search = window.location.search;
+    if (!target.hash) target.hash = window.location.hash;
+    link.href = target.toString();
+  });
 
   const bookingForm = document.getElementById('booking-form');
   if (bookingForm) {
     const note = document.createElement('p');
     note.className = 'github-preview-note';
-    note.textContent = 'Это визуальная тестовая версия. Заявка не будет отправлена.';
+    note.textContent = copy.formNote;
     bookingForm.prepend(note);
     bookingForm.addEventListener('submit', (event) => event.preventDefault());
     const submitButton = bookingForm.querySelector('button[type="submit"]');
     if (submitButton) {
       submitButton.disabled = true;
-      submitButton.textContent = 'Отправка отключена в preview';
+      submitButton.textContent = copy.submit;
     }
   }
 
@@ -129,11 +227,11 @@ const previewJs = `(() => {
   if (tabList) {
     tabList.querySelectorAll('button').forEach((button) => {
       button.disabled = true;
-      button.setAttribute('title', 'Интерактивное переключение доступно в рабочей версии');
+      button.setAttribute('title', copy.tabTitle);
     });
     const note = document.createElement('p');
     note.className = 'github-preview-note';
-    note.textContent = 'В GitHub preview показан базовый прайс. Интерактивные вкладки доступны в рабочей версии.';
+    note.textContent = copy.priceNote;
     tabList.after(note);
   }
 })();
@@ -165,23 +263,28 @@ function rewriteRootPaths(html) {
   return rewritten;
 }
 
-function prepareHtml(html) {
+function prepareHtml(html, route) {
+  const locale = localeForRoute(route);
   let prepared = rewriteRootPaths(stripApplicationRuntime(html));
   prepared = prepared.replace(
     /<html\b([^>]*)>/i,
     '<html$1 data-github-preview="true">',
   );
   prepared = prepared.replace(
+    /<html\b([^>]*?)\blang=(['"])[^'"]*\2([^>]*)>/i,
+    `<html$1lang="${locale === "uz" ? "uz-Latn" : locale}"$3>`,
+  );
+  prepared = prepared.replace(
     /<\/head>/i,
-    `<meta name="robots" content="noindex,nofollow,noarchive"><link rel="stylesheet" href="${basePath}/preview.css"></head>`,
+    `<meta name="robots" content="noindex,nofollow,noarchive"><link rel="stylesheet" href="${basePath}/preview.css?v=${previewAssetVersion}"></head>`,
   );
   prepared = prepared.replace(
     /<body\b([^>]*)>/i,
-    '<body$1><aside class="github-preview-banner">Тестовая версия для команды · отправка заявок отключена</aside>',
+    `<body$1><aside class="github-preview-banner">${previewCopy[locale].banner}</aside>`,
   );
   prepared = prepared.replace(
     /<\/body>/i,
-    `<script src="${basePath}/preview.js"></script></body>`,
+    `<script src="${basePath}/preview.js?v=${previewAssetVersion}"></script></body>`,
   );
   return prepared;
 }
@@ -237,7 +340,7 @@ async function render(worker, route) {
     throw new Error(`${route} returned ${response.status}`);
   }
 
-  return prepareHtml(await response.text());
+  return prepareHtml(await response.text(), route);
 }
 
 await rm(outputDir, { recursive: true, force: true });

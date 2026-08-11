@@ -34,8 +34,27 @@ body { padding-top: 34px; }
   opacity: 1;
 }
 
+html[data-github-preview="true"] .mobile-nav[hidden],
+html[data-github-preview="true"] .mobile-nav:not(.is-open) {
+  display: none !important;
+}
+
+@media (max-width: 1240px) {
+  html[data-github-preview="true"] .mobile-nav,
+  html[data-github-preview="true"] .mobile-nav.is-open {
+    max-height: calc(100vh - 110px);
+    max-height: calc(100dvh - 110px - env(safe-area-inset-bottom));
+  }
+}
+
 @media (max-width: 780px) {
   .github-preview-banner { min-height: 42px; font-size: 11px; }
   body { padding-top: 42px; }
   .site-header { top: 42px; }
+
+  html[data-github-preview="true"] .mobile-nav,
+  html[data-github-preview="true"] .mobile-nav.is-open {
+    max-height: calc(100vh - 114px);
+    max-height: calc(100dvh - 114px - env(safe-area-inset-bottom));
+  }
 }
