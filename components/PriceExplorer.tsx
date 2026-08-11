@@ -9,22 +9,67 @@ import {
 import { BrandStar } from "@/components/BrandStar";
 import { ServicePriceList } from "@/components/ServicePriceList";
 import { coursePackages } from "@/data/site";
+import { localizeSiteValue } from "@/data/site-i18n";
+import { getCopy, localeHref, type Locale } from "@/lib/i18n";
 
 type PriceMode = "single" | "course-5" | "course-7" | "course-9";
 
-const priceTabs: ReadonlyArray<readonly [PriceMode, string]> = [
-  ["single", "Разовые услуги"],
-  ["course-5", "5 сеансов · −20%"],
-  ["course-7", "7 сеансов · −25%"],
-  ["course-9", "9 сеансов · −30%"],
-];
+const explorerCopy = {
+  ru: {
+    single: "Разовые услуги",
+    sessions: "сеансов",
+    priceOptions: "Варианты прайса",
+    bestseller: "Хит продаж",
+    regular: "Без скидки",
+    regularSession: "За сеанс без скидки",
+    discountedSession: "За сеанс со скидкой",
+    savings: "Ваша выгода",
+    choosePackage: "Выбрать пакет",
+    note: "Все суммы перенесены из предоставленного прайс-листа без пересчёта или математической корректировки.",
+    consultation: "Получить консультацию",
+  },
+  uz: {
+    single: "Bir martalik xizmatlar",
+    sessions: "seans",
+    priceOptions: "Narx variantlari",
+    bestseller: "Eng ko‘p tanlanadi",
+    regular: "Chegirmasiz",
+    regularSession: "Bir seans, chegirmasiz",
+    discountedSession: "Bir seans, chegirma bilan",
+    savings: "Tejamingiz",
+    choosePackage: "Paketni tanlash",
+    note: "Barcha summalar taqdim etilgan narxlar ro‘yxatidan qayta hisob-kitobsiz yoki matematik tuzatishsiz ko‘chirildi.",
+    consultation: "Maslahat olish",
+  },
+  en: {
+    single: "Single services",
+    sessions: "sessions",
+    priceOptions: "Price options",
+    bestseller: "Bestseller",
+    regular: "Regular price",
+    regularSession: "Regular price per session",
+    discountedSession: "Discounted price per session",
+    savings: "You save",
+    choosePackage: "Choose package",
+    note: "All amounts are reproduced from the supplied price list without recalculation or mathematical adjustment.",
+    consultation: "Get a consultation",
+  },
+} as const;
 
-function bookingHref(mode: PriceMode, itemId: string) {
+function bookingHref(locale: Locale, mode: PriceMode, itemId: string) {
   const sessions = mode.replace("course-", "");
-  return `/booking?service=course-${sessions}-${itemId}`;
+  return localeHref(locale, `/booking?service=course-${sessions}-${itemId}`);
 }
 
-export function PriceExplorer() {
+export function PriceExplorer({ locale = "ru" }: { locale?: Locale }) {
+  const copy = getCopy(locale, explorerCopy);
+  const priceTabs: ReadonlyArray<readonly [PriceMode, string]> = [
+    ["single", copy.single],
+    ["course-5", `5 ${copy.sessions} · −20%`],
+    ["course-7", `7 ${copy.sessions} · −25%`],
+    ["course-9", `9 ${copy.sessions} · −30%`],
+  ];
+  const localizedCourses = localizeSiteValue(coursePackages, locale);
   const [priceMode, setPriceMode] = useState<PriceMode>("single");
 
   useEffect(() => {
@@ -78,7 +123,7 @@ export function PriceExplorer() {
   const activeCourse =
     priceMode === "single"
       ? null
-      : coursePackages.find(
+      : localizedCourses.find(
           (course) => course.sessions === Number(priceMode.replace("course-", "")),
         ) ?? null;
 
@@ -94,7 +139,7 @@ export function PriceExplorer() {
         />
         ),
       )}
-      <div className="price-tabs" role="tablist" aria-label="Варианты прайса">
+      <div className="price-tabs" role="tablist" aria-label={copy.priceOptions}>
         {priceTabs.map(([mode, label], index) => (
           <button
             key={mode}
@@ -119,7 +164,7 @@ export function PriceExplorer() {
         role="tabpanel"
         aria-labelledby={`price-tab-${priceMode}`}
       >
-        {priceMode === "single" && <ServicePriceList />}
+        {priceMode === "single" && <ServicePriceList locale={locale} />}
 
         {activeCourse && (
           <div className="course-package-grid">
@@ -130,33 +175,33 @@ export function PriceExplorer() {
                   <span className="discount-badge">{activeCourse.discount}</span>
                 </div>
                 {item.bestseller && (
-                  <p className="bestseller-badge">Хит продаж</p>
+                  <p className="bestseller-badge">{copy.bestseller}</p>
                 )}
                 <h3>{item.title}</h3>
                 <p className="course-package-price">{item.price}</p>
                 <dl className="course-package-details">
                   <div>
-                    <dt>Без скидки</dt>
+                    <dt>{copy.regular}</dt>
                     <dd>{item.regularPrice}</dd>
                   </div>
                   <div>
-                    <dt>За сеанс без скидки</dt>
+                    <dt>{copy.regularSession}</dt>
                     <dd>{item.regularPerSession}</dd>
                   </div>
                   <div>
-                    <dt>За сеанс со скидкой</dt>
+                    <dt>{copy.discountedSession}</dt>
                     <dd>{item.perSession}</dd>
                   </div>
                   <div>
-                    <dt>Ваша выгода</dt>
+                    <dt>{copy.savings}</dt>
                     <dd>{item.savings}</dd>
                   </div>
                 </dl>
               <Link
                 className="card-action"
-                  href={bookingHref(priceMode, item.id)}
+                  href={bookingHref(locale, priceMode, item.id)}
               >
-                  Выбрать пакет <span aria-hidden="true">↗</span>
+                  {copy.choosePackage} <span aria-hidden="true">↗</span>
               </Link>
               </article>
             ))}
@@ -167,10 +212,9 @@ export function PriceExplorer() {
       <div className="price-note">
         <BrandStar />
         <p>
-          Все суммы перенесены из предоставленного прайс-листа без пересчёта
-          или математической корректировки.
+          {copy.note}
         </p>
-        <Link href="/booking">Получить консультацию</Link>
+        <Link href={localeHref(locale, "/booking")}>{copy.consultation}</Link>
       </div>
     </div>
   );

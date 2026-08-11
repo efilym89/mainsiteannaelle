@@ -1,7 +1,19 @@
 import { reviews } from "@/data/site";
+import { localizeSiteValue } from "@/data/site-i18n";
+import type { Locale } from "@/lib/i18n";
 
-export function ReviewCards({ limit }: { limit?: number }) {
-  const items = typeof limit === "number" ? reviews.slice(0, limit) : reviews;
+export function ReviewCards({
+  limit,
+  locale = "ru",
+}: {
+  limit?: number;
+  locale?: Locale;
+}) {
+  const localizedReviews = localizeSiteValue(reviews, locale);
+  const items =
+    typeof limit === "number"
+      ? localizedReviews.slice(0, limit)
+      : localizedReviews;
 
   return (
     <div className="reviews-grid">

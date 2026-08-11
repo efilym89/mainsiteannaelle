@@ -1,6 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { BrandStar } from "@/components/BrandStar";
+import { getCopy, localeHref, type Locale } from "@/lib/i18n";
+
+const pageHeroCopy = {
+  ru: { home: "Главная", breadcrumbs: "Хлебные крошки" },
+  uz: { home: "Bosh sahifa", breadcrumbs: "Navigatsiya yo‘li" },
+  en: { home: "Home", breadcrumbs: "Breadcrumbs" },
+} as const;
 
 type PageHeroProps = {
   label: string;
@@ -10,6 +17,7 @@ type PageHeroProps = {
   imageAlt?: string;
   primary?: { href: string; label: string };
   secondary?: { href: string; label: string };
+  locale?: Locale;
 };
 
 export function PageHero({
@@ -20,7 +28,9 @@ export function PageHero({
   imageAlt = "",
   primary,
   secondary,
+  locale = "ru",
 }: PageHeroProps) {
+  const copy = getCopy(locale, pageHeroCopy);
   const secondaryIsExternal =
     secondary &&
     /^(https?:|tel:|mailto:)/.test(secondary.href);
@@ -29,8 +39,8 @@ export function PageHero({
     <section className={`page-hero ${image ? "has-image" : ""}`}>
       <div className="page-hero-pattern" aria-hidden="true" />
       <div className="shell">
-        <nav className="breadcrumbs" aria-label="Хлебные крошки">
-          <Link href="/">Главная</Link>
+        <nav className="breadcrumbs" aria-label={copy.breadcrumbs}>
+          <Link href={localeHref(locale, "/")}>{copy.home}</Link>
           <span aria-hidden="true">/</span>
           <span aria-current="page">{label}</span>
         </nav>
@@ -45,7 +55,7 @@ export function PageHero({
             {(primary || secondary) && (
               <div className="hero-actions">
                 {primary && (
-                  <Link className="button" href={primary.href}>
+                  <Link className="button" href={localeHref(locale, primary.href)}>
                     {primary.label} <span aria-hidden="true">↗</span>
                   </Link>
                 )}
@@ -60,7 +70,7 @@ export function PageHero({
                   </a>
                 )}
                 {secondary && !secondaryIsExternal && (
-                  <Link className="text-link" href={secondary.href}>
+                  <Link className="text-link" href={localeHref(locale, secondary.href)}>
                     {secondary.label} <span aria-hidden="true">→</span>
                   </Link>
                 )}

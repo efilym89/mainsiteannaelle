@@ -1,10 +1,74 @@
 import { getDb } from "../../../db";
 import { bookings } from "../../../db/schema";
 import { bookingServices, contact } from "../../../data/site";
+import { isLocale, type Locale } from "../../../lib/i18n";
 
 const contactMethods = new Set(["telegram", "whatsapp", "call"]);
-const allowedServices = new Set(bookingServices.map((service) => service.value));
+const bookingServiceBySubmissionValue = new Map(
+  bookingServices.flatMap(
+    (service): [string, string][] => [
+      [service.id, service.value],
+      [service.value, service.value],
+    ],
+  ),
+);
 const maxRequestSize = 12_000;
+
+const messages = {
+  ru: {
+    invalidRequest: "Неверный формат запроса.",
+    tooLarge: "Запрос слишком большой.",
+    unreadable: "Не удалось прочитать данные формы.",
+    name: "Укажите имя — минимум 2 символа.",
+    phone: "Проверьте номер телефона.",
+    contactMethod: "Выберите удобный способ связи.",
+    service: "Выберите услугу из списка.",
+    consent: "Нужно согласие на обработку данных.",
+    date: "Выберите корректную дату — сегодня или позже.",
+    time: "Выберите время с 09:00 до 21:00.",
+    success:
+      "Спасибо! Заявка отправлена. Администратор свяжется с вами, чтобы подтвердить услугу и время.",
+    failure:
+      "Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь со студией по телефону.",
+  },
+  uz: {
+    invalidRequest: "So‘rov formati noto‘g‘ri.",
+    tooLarge: "So‘rov hajmi juda katta.",
+    unreadable: "Shakl ma’lumotlarini o‘qib bo‘lmadi.",
+    name: "Ismni kiriting — kamida 2 ta belgi.",
+    phone: "Telefon raqamini tekshiring.",
+    contactMethod: "Qulay aloqa usulini tanlang.",
+    service: "Xizmatni ro‘yxatdan tanlang.",
+    consent: "Ma’lumotlarni qayta ishlashga rozilik kerak.",
+    date: "Bugungi yoki undan keyingi to‘g‘ri sanani tanlang.",
+    time: "09:00 dan 21:00 gacha bo‘lgan vaqtni tanlang.",
+    success:
+      "Rahmat! So‘rovingiz yuborildi. Xizmat va vaqtni tasdiqlash uchun administrator siz bilan bog‘lanadi.",
+    failure:
+      "So‘rov yuborilmadi. Yana urinib ko‘ring yoki studiyaga telefon orqali bog‘laning.",
+  },
+  en: {
+    invalidRequest: "Invalid request format.",
+    tooLarge: "The request is too large.",
+    unreadable: "We could not read the form data.",
+    name: "Enter a name of at least 2 characters.",
+    phone: "Check the phone number.",
+    contactMethod: "Choose a preferred contact method.",
+    service: "Choose a service from the list.",
+    consent: "Consent to data processing is required.",
+    date: "Choose a valid date: today or later.",
+    time: "Choose a time between 09:00 and 21:00.",
+    success:
+      "Thank you! Your request has been sent. An administrator will contact you to confirm the service and time.",
+    failure:
+      "We could not send your request. Please try again or call the studio.",
+  },
+} as const;
+
+function requestLocale(request: Request): Locale {
+  const requested = request.headers.get("x-annaelle-locale") ?? "ru";
+  return isLocale(requested) ? requested : "ru";
+}
 
 function clean(value: unknown, maxLength: number) {
   return typeof value === "string"
@@ -57,10 +121,12 @@ function isStudioTime(value: string) {
 }
 
 export async function POST(request: Request) {
+  const locale = requestLocale(request);
+  const copy = messages[locale];
   try {
     if (!request.headers.get("content-type")?.includes("application/json")) {
       return Response.json(
-        { error: "Неверный формат запроса." },
+        { error: copy.invalidRequest },
         { status: 415 },
       );
     }
@@ -68,7 +134,7 @@ export async function POST(request: Request) {
     const declaredSize = Number(request.headers.get("content-length") || 0);
     if (declaredSize > maxRequestSize) {
       return Response.json(
-        { error: "Запрос слишком большой." },
+        { error: copy.tooLarge },
         { status: 413 },
       );
     }
@@ -76,7 +142,7 @@ export async function POST(request: Request) {
     const body = await request.text();
     if (body.length > maxRequestSize) {
       return Response.json(
-        { error: "Запрос слишком большой." },
+        { error: copy.tooLarge },
         { status: 413 },
       );
     }
@@ -86,7 +152,7 @@ export async function POST(request: Request) {
       payload = JSON.parse(body) as Record<string, unknown>;
     } catch {
       return Response.json(
-        { error: "Не удалось прочитать данные формы." },
+        { error: copy.unreadable },
         { status: 400 },
       );
     }
@@ -100,41 +166,44 @@ export async function POST(request: Request) {
     const phone = clean(payload.phone, 30);
     const contactMethod = clean(payload.contactMethod, 16);
     const zone = clean(payload.zone, 160);
+    const canonicalZone = zone
+      ? bookingServiceBySubmissionValue.get(zone)
+      : "";
     const preferredDate = clean(payload.preferredDate, 10);
     const preferredTime = clean(payload.preferredTime, 5);
     const consent = payload.consent === true;
 
     if (name.length < 2) {
       return Response.json(
-        { error: "Укажите имя — минимум 2 символа." },
+        { error: copy.name },
         { status: 400 },
       );
     }
 
     if (!/^[+()\d\s-]{7,30}$/.test(phone)) {
       return Response.json(
-        { error: "Проверьте номер телефона." },
+        { error: copy.phone },
         { status: 400 },
       );
     }
 
     if (!contactMethods.has(contactMethod)) {
       return Response.json(
-        { error: "Выберите удобный способ связи." },
+        { error: copy.contactMethod },
         { status: 400 },
       );
     }
 
-    if (zone && !allowedServices.has(zone)) {
+    if (zone && !canonicalZone) {
       return Response.json(
-        { error: "Выберите услугу из списка." },
+        { error: copy.service },
         { status: 400 },
       );
     }
 
     if (!consent) {
       return Response.json(
-        { error: "Нужно согласие на обработку данных." },
+        { error: copy.consent },
         { status: 400 },
       );
     }
@@ -144,14 +213,14 @@ export async function POST(request: Request) {
       (!isRealIsoDate(preferredDate) || preferredDate < todayInTashkent())
     ) {
       return Response.json(
-        { error: "Выберите корректную дату — сегодня или позже." },
+        { error: copy.date },
         { status: 400 },
       );
     }
 
     if (preferredTime && !isStudioTime(preferredTime)) {
       return Response.json(
-        { error: "Выберите время с 09:00 до 21:00." },
+        { error: copy.time },
         { status: 400 },
       );
     }
@@ -161,7 +230,7 @@ export async function POST(request: Request) {
       name,
       phone,
       contactMethod,
-      zone,
+      zone: canonicalZone,
       branch: contact.address,
       preferredDate,
       preferredTime,
@@ -171,8 +240,7 @@ export async function POST(request: Request) {
     return Response.json(
       {
         ok: true,
-        message:
-          "Спасибо! Заявка отправлена. Администратор свяжется с вами, чтобы подтвердить услугу и время.",
+        message: copy.success,
       },
       {
         status: 201,
@@ -182,8 +250,7 @@ export async function POST(request: Request) {
   } catch {
     return Response.json(
       {
-        error:
-          "Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь со студией по телефону.",
+        error: copy.failure,
       },
       {
         status: 500,
