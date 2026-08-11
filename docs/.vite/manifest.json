@@ -1,0 +1,144 @@
+{
+  "../site/node_modules/vinext/dist/shims/image.js": {
+    "file": "assets/image-CYGHXEE6.js",
+    "name": "image",
+    "src": "../site/node_modules/vinext/dist/shims/image.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "_framework-DjPHiq1u.js"
+    ]
+  },
+  "../site/node_modules/vinext/dist/shims/layout-segment-context.js": {
+    "file": "assets/layout-segment-context-DK1sRzxJ.js",
+    "name": "layout-segment-context",
+    "src": "../site/node_modules/vinext/dist/shims/layout-segment-context.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "virtual:vinext-app-browser-entry",
+      "_framework-DjPHiq1u.js"
+    ]
+  },
+  "../site/node_modules/vinext/dist/shims/link.js": {
+    "file": "assets/link-CQdebnuz.js",
+    "name": "link",
+    "src": "../site/node_modules/vinext/dist/shims/link.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "virtual:vinext-app-browser-entry",
+      "_framework-DjPHiq1u.js"
+    ],
+    "dynamicImports": [
+      "../site/node_modules/vinext/dist/shims/router.js"
+    ]
+  },
+  "../site/node_modules/vinext/dist/shims/router.js": {
+    "file": "assets/router-B5LBNXLD.js",
+    "name": "router",
+    "src": "../site/node_modules/vinext/dist/shims/router.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "virtual:vinext-app-browser-entry",
+      "_framework-DjPHiq1u.js",
+      "../site/node_modules/vinext/dist/shims/link.js"
+    ],
+    "dynamicImports": [
+      "_framework-DjPHiq1u.js"
+    ]
+  },
+  "_framework-DjPHiq1u.js": {
+    "file": "assets/framework-DjPHiq1u.js",
+    "name": "framework",
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js"
+    ]
+  },
+  "_navigation-CS0Dmi7g.js": {
+    "file": "assets/navigation-CS0Dmi7g.js",
+    "name": "navigation",
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "virtual:vinext-app-browser-entry",
+      "_framework-DjPHiq1u.js"
+    ]
+  },
+  "_rolldown-runtime-S-ySWqyJ.js": {
+    "file": "assets/rolldown-runtime-S-ySWqyJ.js",
+    "name": "rolldown-runtime"
+  },
+  "_site-C3SA7u35.js": {
+    "file": "assets/site-C3SA7u35.js",
+    "name": "site"
+  },
+  "components/BookingForm.tsx": {
+    "file": "assets/BookingForm-B2AfrpMx.js",
+    "name": "BookingForm",
+    "src": "components/BookingForm.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "_site-C3SA7u35.js",
+      "_framework-DjPHiq1u.js"
+    ]
+  },
+  "components/MobileStickyCta.tsx": {
+    "file": "assets/MobileStickyCta-MdbaDBiI.js",
+    "name": "MobileStickyCta",
+    "src": "components/MobileStickyCta.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_framework-DjPHiq1u.js",
+      "../site/node_modules/vinext/dist/shims/link.js",
+      "_navigation-CS0Dmi7g.js"
+    ]
+  },
+  "components/PriceExplorer.tsx": {
+    "file": "assets/PriceExplorer-BhAUH5QG.js",
+    "name": "PriceExplorer",
+    "src": "components/PriceExplorer.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "_site-C3SA7u35.js",
+      "_framework-DjPHiq1u.js",
+      "../site/node_modules/vinext/dist/shims/link.js"
+    ]
+  },
+  "components/SiteHeader.tsx": {
+    "file": "assets/SiteHeader-BSd867ER.js",
+    "name": "SiteHeader",
+    "src": "components/SiteHeader.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "_site-C3SA7u35.js",
+      "../site/node_modules/vinext/dist/shims/image.js",
+      "_framework-DjPHiq1u.js",
+      "../site/node_modules/vinext/dist/shims/link.js",
+      "_navigation-CS0Dmi7g.js"
+    ]
+  },
+  "virtual:vinext-app-browser-entry": {
+    "file": "assets/index-Cpd7VrOs.js",
+    "name": "index",
+    "src": "virtual:vinext-app-browser-entry",
+    "isEntry": true,
+    "imports": [
+      "_rolldown-runtime-S-ySWqyJ.js",
+      "_framework-DjPHiq1u.js"
+    ],
+    "dynamicImports": [
+      "components/PriceExplorer.tsx",
+      "components/MobileStickyCta.tsx",
+      "components/SiteHeader.tsx",
+      "virtual:vinext-app-browser-entry",
+      "../site/node_modules/vinext/dist/shims/layout-segment-context.js",
+      "../site/node_modules/vinext/dist/shims/image.js",
+      "components/BookingForm.tsx",
+      "../site/node_modules/vinext/dist/shims/link.js"
+    ]
+  }
+}
