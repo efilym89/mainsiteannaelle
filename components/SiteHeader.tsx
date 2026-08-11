@@ -112,7 +112,6 @@ export function SiteHeader() {
           aria-current={locale === item ? "page" : undefined}
           className={locale === item ? "is-active" : undefined}
           onClick={(event) => {
-            closeMenu();
             if (
               event.button !== 0 ||
               event.metaKey ||
@@ -122,9 +121,10 @@ export function SiteHeader() {
             ) {
               return;
             }
-            const suffix = `${window.location.search}${window.location.hash}`;
-            if (!suffix) return;
             event.preventDefault();
+            closeMenu();
+            if (locale === item) return;
+            const suffix = `${window.location.search}${window.location.hash}`;
             window.location.assign(`${switchLocaleHref(pathname, item)}${suffix}`);
           }}
         >
