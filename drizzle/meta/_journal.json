@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1784790457916,
+      "tag": "0000_lyrical_zaladane",
+      "breakpoints": true
+    }
+  ]
+}
