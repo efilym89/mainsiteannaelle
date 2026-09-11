@@ -20,5 +20,7 @@ jobs:
           node-version: 22.13.0
           cache: npm
       - run: npm ci
+      - run: npm run preview:github
+      - run: git diff --exit-code -- docs
       - run: npm run lint
       - run: npm test
