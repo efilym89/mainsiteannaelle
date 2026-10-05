@@ -1,2 +1,2 @@
-// This preview has no production form endpoint and never sends a booking.
+// The preview never submits a booking automatically. Visitors may open and send a Telegram draft themselves.
 window.ANNAELLE_CONFIG = { testMode: true, telegramUsername: 'annaellelaser' };

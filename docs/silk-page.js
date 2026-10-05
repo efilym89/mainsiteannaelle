@@ -7,7 +7,7 @@ function silkPage(){
       <div class="silk-price"><p>${e(s.hero.priceLabel)}</p><div><strong>699 000</strong><span>сум</span></div><p class="silk-price-note">${e(s.hero.priceNote)}</p></div>
       <div class="button-row">${cardAction(s.hero.action)}${link(s.hero.secondary,'#silk-benefits')}</div>
     </div>
-    <div class="hero-photo"><div class="silk-art"><img src="${asset('silk-editorial.webp')}" width="1122" height="1402" alt="Розовый шёлк" fetchpriority="high">
+    <div class="hero-photo"><div class="silk-art"><img src="${asset('silk-editorial.webp')}"${responsiveAttrs('silk-editorial.webp')} width="1122" height="1402" alt="Розовый шёлк" fetchpriority="high">
       <div class="wallet-card"><img src="${asset('logo-horizontal-white.svg')}" width="180" height="58" alt="Annaelle"><p>${e(s.hero.cardLabel)}</p><div class="wallet-bottom"><strong>Silk</strong><span>${e(s.hero.cardTerm)}</span></div></div>
     </div></div>
   </div></section>`;

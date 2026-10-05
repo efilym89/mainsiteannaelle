@@ -655,3 +655,60 @@ h2,.manifesto h2{font-size:2.1rem}
  .silk-page .wallet-card>p{font-size:.75rem;margin:8px 0}
  .silk-page .wallet-card strong{font-size:1.8rem}
 }
+
+/* Audit fixes: keep the Annaelle palette and improve the reading order. */
+:root{--muted:#68585f}
+.footer :focus-visible{outline-color:#fff}
+.booking-form input{border-color:#927a85}
+.booking-form input[aria-invalid="true"]{border-color:#973e51;outline:1px solid #973e51}
+.booking-intro{font-size:14px;color:var(--muted);margin-bottom:22px}
+.selected-offer small{display:block;margin-top:10px;font-size:14px;color:var(--muted)}
+.telegram-submit{width:100%;margin-top:10px}
+.booking-fields{border:0;padding:0;margin:0;min-width:0}
+.booking-form[data-ready] .booking-fallback{display:none}
+.price-nav-shell{position:sticky;top:94px;z-index:25;background:var(--paper);border-bottom:1px solid var(--line)}
+.price-nav{position:static;margin:auto}
+.price-nav a[aria-current]{color:var(--rose-dark);box-shadow:inset 0 -2px var(--rose-dark)}
+.package-menu{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:28px}
+.package-choice{min-height:0;padding:20px;text-decoration:none}
+.package-choice .count{font-size:2.7rem}
+.package-choice .discount{margin:8px 0 0}
+.package-choice[aria-current]{background:var(--rose-dark);border-color:var(--rose-dark);color:#fff}
+.package-choice[aria-current] .discount{color:#fff}
+.package-group{scroll-margin-top:180px;margin:30px 0}
+.package-group>h3{font-family:Viaoda,Georgia,serif;font-size:2.2rem;margin-bottom:24px}
+.package-card h4{font-size:1.1rem;font-weight:600;line-height:1.5;margin:16px 0 24px;min-height:5em}
+.hero-context{font-family:Manrope,Arial,sans-serif!important;font-size:14px!important;font-weight:600!important;line-height:1.6!important;letter-spacing:.02em!important;color:var(--rose-dark);margin:0!important}
+.offer-copy-grid>.hero-context{grid-row:1}
+.offer-copy-grid .offer-price small{font-size:14px}
+@media(max-width:780px){
+ html{scroll-padding-top:146px}
+ .offer-carousel{padding-top:24px}
+ .offer-carousel .hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+ .offer-carousel .hero-copy{display:contents}
+ .offer-copy-grid{grid-row:1;grid-template-rows:auto minmax(6.3rem,auto) auto auto auto;row-gap:12px}
+ .offer-copy-grid>.hero-context{font-size:14px!important}
+ .offer-copy-grid .offer-title{font-size:clamp(2.6rem,10vw,3.4rem);line-height:1.08}
+ .offer-copy-grid .lead{font-size:1rem;line-height:1.65}
+ .offer-copy-grid .offer-price{padding:2px 0}
+ .offer-price strong{font-size:2.6rem}
+ .offer-copy-grid .button-row{gap:20px;align-items:center;flex-wrap:wrap}
+ .offer-carousel .slide-visuals{grid-row:2;order:0}
+ .offer-carousel .photo-mat{height:290px;max-width:360px}
+ .offer-carousel .carousel-controls{grid-row:3;order:0;margin:0}
+ .offer-carousel .slide-dots{grid-template-columns:1fr;gap:8px}
+ .offer-carousel .slide-dot{min-height:48px;flex-direction:row;align-items:center;padding:12px 16px}
+ .offer-carousel .slide-option-title{font-size:14px}
+ .price-nav-shell{top:73px}
+ .price-nav{display:flex;overflow-x:auto;flex-wrap:nowrap;gap:22px;padding:12px 0}
+ .price-nav a{white-space:nowrap;padding:8px 0;flex:none}
+ .package-menu{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .package-choice{padding:18px;border-radius:24px 24px 6px 24px}
+ .package-choice .count{font-size:2.4rem}
+ .package-choice .count-label{font-size:14px}
+ .package-choice .discount{font-size:14px}
+ .package-card h4{min-height:0}
+ .social-dock{bottom:calc(var(--booking-bar-height,70px) + 16px)}
+}
+
+.equipment-section .contact-card h2{font-size:2rem;margin:20px 0}.equipment-section .contact-card>p:not(.eyebrow){margin:20px 0;color:var(--muted)}.training-note{max-width:800px}.training-note .lead{max-width:none;margin:20px 0}.package-terms{margin-top:25px;border-top:1px solid #bca4af;padding-top:20px}.package-terms summary{cursor:pointer;font-weight:600}.package-terms p{margin:18px 0;max-width:700px}
