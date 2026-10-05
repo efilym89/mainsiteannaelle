@@ -1,169 +1,275 @@
 window.CATALOG = {
   "packages": {
-    "5": {
-      "discount": "−20%",
-      "maxSaving": "999 000",
+    "3": {
+      "minPrice": "1 645 000",
       "items": [
         {
-          "title": "Подмышки, бикини",
-          "oldPrice": "2 150 000",
-          "price": "1 720 000",
-          "saving": 430000
+          "code": "I",
+          "title": "Подмышки, бикини / голени + зона MINI",
+          "oldPrice": "1 764 000",
+          "price": "1 645 000",
+          "perVisit": "548 333",
+          "approximate": true,
+          "saving": 119000
         },
         {
-          "title": "Подмышки, бикини, руки полностью",
-          "oldPrice": "3 850 000",
-          "price": "3 080 000",
-          "saving": 770000
+          "code": "II",
+          "title": "Подмышки, бикини, голени + зона MINI",
+          "oldPrice": "2 058 000",
+          "price": "1 890 000",
+          "perVisit": "630 000",
+          "approximate": false,
+          "saving": 168000
         },
         {
-          "title": "Подмышки, бикини, спина",
-          "oldPrice": "3 850 000",
-          "price": "3 080 000",
-          "saving": 770000,
-          "hit": true
+          "code": "III",
+          "title": "Подмышки, бикини, ноги полностью + зона MINI",
+          "oldPrice": "2 289 000",
+          "price": "2 170 000",
+          "perVisit": "723 333",
+          "approximate": true,
+          "saving": 119000
         },
         {
-          "title": "Подмышки, бикини, ноги полностью",
-          "oldPrice": "4 600 000",
-          "price": "3 680 000",
-          "saving": 920000
+          "code": "IV",
+          "title": "Подмышки, бикини, ноги полностью, руки полностью + зона MINI",
+          "oldPrice": "2 520 000",
+          "price": "2 450 000",
+          "perVisit": "816 667",
+          "approximate": true,
+          "saving": 70000
         },
         {
-          "title": "Всё тело",
-          "oldPrice": "4 995 000",
-          "price": "3 996 000",
-          "saving": 999000,
-          "hit": true
+          "code": "V",
+          "title": "Всё тело без ограничений",
+          "oldPrice": "3 150 000",
+          "price": "3 010 000",
+          "perVisit": "1 003 333",
+          "approximate": true,
+          "saving": 140000
+        }
+      ]
+    },
+    "5": {
+      "minPrice": "2 590 000",
+      "items": [
+        {
+          "code": "I",
+          "title": "Подмышки, бикини / голени + зона MINI",
+          "oldPrice": "2 940 000",
+          "price": "2 590 000",
+          "perVisit": "518 000",
+          "approximate": false,
+          "saving": 350000
+        },
+        {
+          "code": "II",
+          "title": "Подмышки, бикини, голени + зона MINI",
+          "oldPrice": "3 430 000",
+          "price": "3 010 000",
+          "perVisit": "602 000",
+          "approximate": false,
+          "saving": 420000
+        },
+        {
+          "code": "III",
+          "title": "Подмышки, бикини, ноги полностью + зона MINI",
+          "oldPrice": "3 815 000",
+          "price": "3 360 000",
+          "perVisit": "672 000",
+          "approximate": false,
+          "saving": 455000
+        },
+        {
+          "code": "IV",
+          "title": "Подмышки, бикини, ноги полностью, руки полностью + зона MINI",
+          "oldPrice": "4 200 000",
+          "price": "3 780 000",
+          "perVisit": "756 000",
+          "approximate": false,
+          "saving": 420000
+        },
+        {
+          "code": "V",
+          "title": "Всё тело без ограничений",
+          "oldPrice": "5 250 000",
+          "price": "4 620 000",
+          "perVisit": "924 000",
+          "approximate": false,
+          "saving": 630000
         }
       ]
     },
     "7": {
-      "discount": "−25%",
-      "maxSaving": "1 750 000",
+      "minPrice": "3 360 000",
       "items": [
         {
-          "title": "Подмышки, бикини",
-          "oldPrice": "3 010 000",
-          "price": "2 257 500",
-          "saving": 752500,
-          "hit": true
+          "code": "I",
+          "title": "Подмышки, бикини / голени + зона MINI",
+          "oldPrice": "4 116 000",
+          "price": "3 360 000",
+          "perVisit": "480 000",
+          "approximate": false,
+          "saving": 756000
         },
         {
-          "title": "Подмышки, бикини, руки полностью",
-          "oldPrice": "5 390 000",
-          "price": "4 039 000",
-          "saving": 1351000
+          "code": "II",
+          "title": "Подмышки, бикини, голени + зона MINI",
+          "oldPrice": "4 802 000",
+          "price": "3 920 000",
+          "perVisit": "560 000",
+          "approximate": false,
+          "saving": 882000
         },
         {
-          "title": "Подмышки, бикини, спина",
-          "oldPrice": "5 390 000",
-          "price": "4 039 000",
-          "saving": 1351000,
-          "hit": true
+          "code": "III",
+          "title": "Подмышки, бикини, ноги полностью + зона MINI",
+          "oldPrice": "5 341 000",
+          "price": "4 270 000",
+          "perVisit": "610 000",
+          "approximate": false,
+          "saving": 1071000
         },
         {
-          "title": "Подмышки, бикини, ноги полностью",
-          "oldPrice": "6 440 000",
-          "price": "4 830 000",
-          "saving": 1610000
+          "code": "IV",
+          "title": "Подмышки, бикини, ноги полностью, руки полностью + зона MINI",
+          "oldPrice": "5 880 000",
+          "price": "4 970 000",
+          "perVisit": "710 000",
+          "approximate": false,
+          "saving": 910000
         },
         {
-          "title": "Всё тело",
-          "oldPrice": "6 993 000",
-          "price": "5 243 000",
-          "saving": 1750000,
-          "hit": true
+          "code": "V",
+          "title": "Всё тело без ограничений",
+          "oldPrice": "7 350 000",
+          "price": "6 090 000",
+          "perVisit": "870 000",
+          "approximate": false,
+          "saving": 1260000
         }
       ]
     },
     "9": {
-      "discount": "−30%",
-      "maxSaving": "2 700 000",
+      "minPrice": "4 025 000",
       "items": [
         {
-          "title": "Подмышки, бикини",
-          "oldPrice": "3 870 000",
-          "price": "2 700 000",
-          "saving": 1170000
+          "code": "I",
+          "title": "Подмышки, бикини / голени + зона MINI",
+          "oldPrice": "5 292 000",
+          "price": "4 025 000",
+          "perVisit": "447 222",
+          "approximate": true,
+          "saving": 1267000
         },
         {
-          "title": "Подмышки, бикини, руки полностью",
-          "oldPrice": "6 930 000",
-          "price": "4 851 000",
-          "saving": 2079000,
-          "hit": true
+          "code": "II",
+          "title": "Подмышки, бикини, голени + зона MINI",
+          "oldPrice": "6 174 000",
+          "price": "4 690 000",
+          "perVisit": "521 111",
+          "approximate": true,
+          "saving": 1484000
         },
         {
-          "title": "Подмышки, бикини, спина",
-          "oldPrice": "6 930 000",
-          "price": "4 851 000",
-          "saving": 2079000
+          "code": "III",
+          "title": "Подмышки, бикини, ноги полностью + зона MINI",
+          "oldPrice": "6 867 000",
+          "price": "5 180 000",
+          "perVisit": "575 556",
+          "approximate": true,
+          "saving": 1687000
         },
         {
-          "title": "Подмышки, бикини, ноги полностью",
-          "oldPrice": "8 280 000",
-          "price": "5 796 000",
-          "saving": 2484000
+          "code": "IV",
+          "title": "Подмышки, бикини, ноги полностью, руки полностью + зона MINI",
+          "oldPrice": "7 560 000",
+          "price": "5 950 000",
+          "perVisit": "661 111",
+          "approximate": true,
+          "saving": 1610000
         },
         {
-          "title": "Всё тело",
-          "oldPrice": "8 991 000",
-          "price": "6 291 000",
-          "saving": 2700000,
-          "hit": true
+          "code": "V",
+          "title": "Всё тело без ограничений",
+          "oldPrice": "9 450 000",
+          "price": "7 210 000",
+          "perVisit": "801 111",
+          "approximate": true,
+          "saving": 2240000
         }
       ]
     }
   },
   "singles": [
     {
-      "title": "Подмышки, бикини",
-      "price": "430 000"
+      "code": "I",
+      "title": "Подмышки, бикини / голени + зона MINI",
+      "price": "588 000"
     },
     {
-      "title": "Подмышки, бикини, руки полностью",
-      "price": "770 000"
+      "code": "II",
+      "title": "Подмышки, бикини, голени + зона MINI",
+      "price": "686 000"
     },
     {
-      "title": "Подмышки, бикини, спина",
-      "price": "770 000",
-      "hit": true
+      "code": "III",
+      "title": "Подмышки, бикини, ноги полностью + зона MINI",
+      "price": "763 000"
     },
     {
-      "title": "Подмышки, бикини, ноги полностью",
-      "price": "920 000"
+      "code": "IV",
+      "title": "Подмышки, бикини, ноги полностью, руки полностью + зона MINI",
+      "price": "840 000"
     },
     {
-      "title": "Всё тело",
-      "price": "999 000",
-      "hit": true
+      "code": "V",
+      "title": "Всё тело без ограничений",
+      "price": "1 050 000"
     }
   ],
   "offers": [
     {
       "number": "01",
       "title": "Подмышки + бикини",
-      "price": "299 000",
+      "price": "220 000",
       "image": "assets/home-offer-laser-hero.webp",
       "imageAlt": "Лазерная эпиляция подмышек в Annaelle",
-      "detail": "Две популярные зоны для комфортного знакомства со студией."
+      "detail": "Две популярные зоны для комфортного знакомства со студией.",
+      "titleLines": [
+        "Подмышки",
+        "+ бикини"
+      ],
+      "cardImage": "offer-underarms-detail.webp",
+      "cardAlt": "Лазерная эпиляция подмышек в Annaelle"
     },
     {
       "number": "02",
-      "title": "Любые три зоны",
-      "price": "540 000",
+      "title": "Бикини + подмышки + голени",
+      "price": "380 000",
       "image": "assets/offer-three-zones.webp",
       "imageAlt": "Процедура лазерной эпиляции ног в Annaelle",
-      "detail": "Выберите три зоны — мастер поможет собрать удобный формат первого визита."
+      "detail": "Три зоны в одном предложении: бикини, подмышки и голени.",
+      "titleLines": [
+        "Бикини, подмышки",
+        "+ голени"
+      ],
+      "cardImage": "offer-legs-detail.webp",
+      "cardAlt": "Мастер проводит лазерную эпиляцию ног"
     },
     {
       "number": "03",
-      "title": "Все зоны",
-      "price": "699 000",
+      "title": "Все зоны без ограничений",
+      "price": "590 000",
       "image": "assets/offer-all-zones.webp",
       "imageAlt": "Гостья и мастер во время процедуры в Annaelle",
-      "detail": "Руки полностью, ноги полностью, бикини, подмышки и ещё одна зона на выбор."
+      "detail": "Все зоны без ограничений — по специальной цене первого посещения.",
+      "titleLines": [
+        "Все зоны",
+        "без ограничений"
+      ],
+      "cardImage": "offer-face-detail.webp",
+      "cardAlt": "Лазерная эпиляция лица в Annaelle"
     }
   ],
   "studios": [
@@ -295,6 +401,55 @@ window.CATALOG = {
       "beforeHeight": 606,
       "afterWidth": 677,
       "afterHeight": 609
+    }
+  ],
+  "zoneGroups": [
+    {
+      "code": "MINI",
+      "label": "Малые зоны",
+      "price": "95 000",
+      "zones": [
+        "Подбородок",
+        "Верхняя губа",
+        "Ареолы сосков",
+        "Живот (дорожка)"
+      ]
+    },
+    {
+      "code": "MIDI",
+      "label": "Средние зоны",
+      "price": "299 000",
+      "zones": [
+        "Ягодицы",
+        "Поясница",
+        "Подмышки",
+        "Руки до локтя",
+        "Руки выше локтя",
+        "Бёдра",
+        "Голени",
+        "Бикини классика"
+      ]
+    },
+    {
+      "code": "MAXI",
+      "label": "Большие зоны",
+      "price": "319 000",
+      "zones": [
+        "Лицо полностью",
+        "Руки полностью",
+        "Грудь полностью",
+        "Глубокое бикини",
+        "Живот полностью"
+      ]
+    },
+    {
+      "code": "FULL",
+      "label": "Макси зоны",
+      "price": "399 000",
+      "zones": [
+        "Ноги полностью",
+        "Спина полностью"
+      ]
     }
   ]
 };

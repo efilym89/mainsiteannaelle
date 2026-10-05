@@ -1,4 +1,19 @@
-window.FULL_RES_PHOTOS = ["home-offer-laser-hero.webp", "offer-all-zones.webp", "offer-three-zones.webp", "reviews-hero.webp", "specialists-care-original-bsa08192.webp", "studio-1-detail.webp", "studio-1-prep.webp", "studio-1-room-wide.webp", "studio-1-waiting.webp", "studio-1-wash.webp", "studio-2-entrance.webp", "studio-2-lounge.webp", "studio-2-vanity.webp", "studio-2-wash.webp", "studio-treatment.webp"];
+window.FULL_RES_PHOTOS = ["home-offer-laser-hero.webp","offer-all-zones.webp","offer-three-zones.webp","reviews-hero.webp","specialists-care-original-bsa08192.webp","studio-1-detail.webp","studio-1-prep.webp","studio-1-room-wide.webp","studio-1-waiting.webp","studio-1-wash.webp","studio-2-entrance.webp","studio-2-lounge.webp","studio-2-vanity.webp","studio-2-wash.webp","studio-treatment.webp"];
+window.PHOTO_ORIGINALS = {
+  "home-offer-laser-hero.webp": "full/home-offer-laser-hero.jpg",
+  "offer-three-zones.webp": "full/offer-three-zones.jpg",
+  "offer-all-zones.webp": "full/offer-all-zones.jpg",
+  "reviews-hero.webp": "full/reviews-hero.jpg",
+  "specialists-care-original-bsa08192.webp": "full/specialists-care-original-bsa08192.jpg",
+  "offer-underarms-detail.webp": "full/offer-underarms-detail.jpg",
+  "offer-legs-detail.webp": "full/offer-legs-detail.jpg",
+  "offer-face-detail.webp": "full/offer-face-detail.jpg",
+  "specialist-portrait.webp": "full/specialist-portrait.jpg",
+  "visit-consultation.webp": "full/visit-consultation.jpg",
+  "prices-guest.webp": "full/prices-guest.jpg",
+  "studio-welcome.webp": "full/studio-welcome.jpg",
+  "studio-cabinet.webp": "full/studio-cabinet.jpg"
+};
 window.PHOTO_DIMENSIONS = {
   "about-hero.webp": [
     1040,
@@ -243,5 +258,29 @@ window.PHOTO_DIMENSIONS = {
   "studio-welcome.webp": [
     2560,
     1709
+  ],
+  "offer-underarms-detail.webp": [
+    1707,
+    2560
+  ],
+  "offer-legs-detail.webp": [
+    1707,
+    2560
+  ],
+  "offer-face-detail.webp": [
+    1707,
+    2560
+  ],
+  "specialist-portrait.webp": [
+    1707,
+    2560
+  ],
+  "visit-consultation.webp": [
+    1707,
+    2560
+  ],
+  "prices-guest.webp": [
+    1707,
+    2560
   ]
 };

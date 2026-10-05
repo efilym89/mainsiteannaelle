@@ -2,13 +2,14 @@ import { cp, lstat, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/prom
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = path.join(root, 'preview-site');
 const output = path.join(root, 'docs');
 const basePath = '/mainsiteannaelle';
 const routes = ['', 'services', 'prices', 'silk', 'about', 'specialists', 'reviews', 'faq', 'contacts', 'booking'];
-const runtimeFiles = ['index.html', 'styles.css', 'config.js', 'original-data.js', 'catalog.js', 'data.js', 'translations.js', 'silk-content.js', 'silk-translations.js', 'silk-page.js', 'full-res.js', 'app.js'];
+const runtimeFiles = ['index.html', 'styles.css', 'config.js', 'original-data.js', 'catalog.js', 'data.js', 'translations.js', 'silk-content.js', 'silk-translations.js', 'silk-page.js', 'full-res.js', 'oct-translations.js', 'app.js'];
 
 // Only this repository's generated docs directory may be replaced.
 if (path.dirname(output) !== root || path.basename(output) !== 'docs') throw new Error('Invalid preview output');
@@ -27,8 +28,13 @@ await mkdir(output, { recursive: true });
 for (const file of runtimeFiles) await cp(path.join(source, file), path.join(output, file));
 await cp(path.join(source, 'assets'), path.join(output, 'assets'), { recursive: true });
 
+// Content versions keep returning visitors from seeing cached prices or styling.
+const versions = Object.fromEntries(await Promise.all(runtimeFiles.map(async file =>
+  [file, createHash('sha256').update((await readFile(path.join(source, file), 'utf8')).replace(/\r\n/g, '\n')).digest('hex').slice(0,12)]
+)));
 const html = (await readFile(path.join(source, 'index.html'), 'utf8'))
-  .replace(/\b(href|src)="\/(?!\/)/g, `$1="${basePath}/`);
+  .replace(/\b(href|src)="\/([^"?]+)"/g, (_, attr, file) =>
+    `${attr}="${basePath}/${file}${versions[file] ? '?v=' + versions[file] : ''}"`);
 const css = (await readFile(path.join(source, 'styles.css'), 'utf8'))
   .replace(/url\((['"]?)\/(?!\/)/g, `url($1${basePath}/`);
 await writeFile(path.join(output, 'styles.css'), css);
@@ -54,7 +60,7 @@ await writeFile(path.join(output, '404.html'), `<!doctype html><html lang="ru"><
 
 // Validate every asset reference written into the HTML and stylesheet.
 for (const match of (html + css).matchAll(/(?:src="|href="|url\(['"]?)(\/mainsiteannaelle\/[^\s"')]+)/g)) {
-  const file = path.join(output, match[1].slice(basePath.length + 1));
+  const file = path.join(output, match[1].slice(basePath.length + 1).split('?')[0]);
   if (!(await lstat(file)).isFile()) throw new Error(`Missing preview asset: ${match[1]}`);
 }
 const emitted = await readdir(output);
