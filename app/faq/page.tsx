@@ -5,58 +5,111 @@ import { CtaBand } from "@/components/CtaBand";
 import { FaqList } from "@/components/FaqList";
 import { PageHero } from "@/components/PageHero";
 import { faqs } from "@/data/site";
+import { localizeSiteValue } from "@/data/site-i18n";
+import { getCopy, localeHref, type Locale } from "@/lib/i18n";
+import { localizedMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Вопросы о лазерной эпиляции",
-  description:
-    "Ответы Annaelle на частые вопросы о лазерной эпиляции, подготовке, курсе, ощущениях и противопоказаниях.",
-  alternates: { canonical: "/faq" },
-};
+export const metadata: Metadata = localizedMetadata("/faq", "ru");
 
-const groups = [
-  {
-    title: "Процедура и результат",
-    text: "Курс, ощущения и постепенные изменения.",
-    items: [faqs[0], faqs[2], faqs[4]],
+const pageCopy = {
+  ru: {
+    title: "Ответы на важные вопросы",
+    intro:
+      "Собрали основную информацию о подготовке, ходе процедуры и выборе услуги. Если вашей ситуации нет в списке, задайте вопрос администратору до визита.",
+    ask: "Задать вопрос",
+    services: "Об услугах",
+    groups: [
+      ["Процедура и результат", "Курс, ощущения и постепенные изменения."],
+      ["Подготовка и уход", "Что сделать до визита и между процедурами."],
+      ["Безопасность", "Ситуации, которые важно обсудить до записи."],
+      ["Выбор услуги", "Как сравнить разовую услугу и комбо-пакет."],
+    ],
+    noAnswer: "Не нашли ответ?",
+    clarifyTitle: "Уточните свою ситуацию до визита",
+    clarifyText:
+      "Администратор поможет с организационными вопросами. При сомнениях, связанных со здоровьем или препаратами, заранее проконсультируйтесь с врачом.",
+    contact: "Связаться",
+    compare: "Сравнить услуги",
+    ctaTitle: "Готовы выбрать время?",
+    ctaText:
+      "Оставьте контакты — администратор уточнит детали, ответит на организационные вопросы и подтвердит запись.",
   },
-  {
-    title: "Подготовка и уход",
-    text: "Что сделать до визита и между процедурами.",
-    items: [faqs[1], faqs[3]],
+  uz: {
+    title: "Muhim savollarga javoblar",
+    intro:
+      "Tayyorgarlik, muolaja jarayoni va xizmat tanlash haqidagi asosiy ma’lumotlarni jamladik. Vaziyatingiz ro‘yxatda bo‘lmasa, tashrifdan oldin administratorga savol bering.",
+    ask: "Savol berish",
+    services: "Xizmatlar haqida",
+    groups: [
+      ["Muolaja va natija", "Kurs, hislar va bosqichma-bosqich o‘zgarishlar."],
+      ["Tayyorgarlik va parvarish", "Tashrifdan oldin va muolajalar orasida nimalar qilish kerak."],
+      ["Xavfsizlik", "Yozilishdan oldin muhokama qilish muhim bo‘lgan holatlar."],
+      ["Xizmat tanlash", "Bir martalik xizmat va kombo-paketni qanday solishtirish mumkin."],
+    ],
+    noAnswer: "Javob topmadingizmi?",
+    clarifyTitle: "Tashrifdan oldin vaziyatingizni aniqlashtiring",
+    clarifyText:
+      "Administrator tashkiliy savollarda yordam beradi. Sog‘liq yoki dorilar bilan bog‘liq shubhalar bo‘lsa, oldindan shifokor bilan maslahatlashishni tavsiya qilamiz.",
+    contact: "Bog‘lanish",
+    compare: "Xizmatlarni solishtirish",
+    ctaTitle: "Vaqt tanlashga tayyormisiz?",
+    ctaText:
+      "Kontaktlaringizni qoldiring — administrator tafsilotlarni aniqlaydi, tashkiliy savollarga javob beradi va yozilishni tasdiqlaydi.",
   },
-  {
-    title: "Безопасность",
-    text: "Ситуации, которые важно обсудить до записи.",
-    items: [faqs[5], faqs[6]],
+  en: {
+    title: "Answers to important questions",
+    intro:
+      "Here is the essential information about preparation, the procedure and choosing a service. If your situation is not listed, ask an administrator before your visit.",
+    ask: "Ask a question",
+    services: "About services",
+    groups: [
+      ["Procedure and results", "The course, sensations and gradual changes."],
+      ["Preparation and care", "What to do before a visit and between sessions."],
+      ["Safety", "Situations to discuss before booking."],
+      ["Choosing a service", "How to compare a single service with a course package."],
+    ],
+    noAnswer: "Couldn’t find an answer?",
+    clarifyTitle: "Discuss your situation before your visit",
+    clarifyText:
+      "An administrator can help with practical questions. If you have health- or medication-related concerns, please consult a doctor in advance.",
+    contact: "Contact us",
+    compare: "Compare services",
+    ctaTitle: "Ready to choose a time?",
+    ctaText:
+      "Leave your contact details. An administrator will clarify the details, answer practical questions and confirm your appointment.",
   },
-  {
-    title: "Выбор услуги",
-    text: "Как сравнить разовую услугу и комбо-пакет.",
-    items: [faqs[7]],
-  },
-] as const;
+} as const;
 
-export default function FaqPage() {
+const groupIndexes = [[0, 2, 4], [1, 3], [5, 6], [7]] as const;
+
+export function FaqPageContent({ locale = "ru" }: { locale?: Locale }) {
+  const copy = getCopy(locale, pageCopy);
+  const localizedFaqs = localizeSiteValue(faqs, locale);
+
   return (
     <main id="main-content">
       <PageHero
+        locale={locale}
         label="FAQ"
-        title="Ответы на важные вопросы"
-        text="Собрали основную информацию о подготовке, ходе процедуры и выборе услуги. Если вашей ситуации нет в списке, задайте вопрос администратору до визита."
-        primary={{ href: "/booking", label: "Задать вопрос" }}
-        secondary={{ href: "/services", label: "Об услугах" }}
+        title={copy.title}
+        text={copy.intro}
+        primary={{ href: "/booking", label: copy.ask }}
+        secondary={{ href: "/services", label: copy.services }}
       />
 
       <section className="section faq-page-section">
         <div className="shell faq-categories">
-          {groups.map((group, index) => (
-            <section className="faq-category" key={group.title}>
+          {copy.groups.map(([title, text], index) => (
+            <section className="faq-category" key={title}>
               <div className="faq-category-intro">
                 <span>0{index + 1}</span>
-                <h2>{group.title}</h2>
-                <p>{group.text}</p>
+                <h2>{title}</h2>
+                <p>{text}</p>
               </div>
-              <FaqList items={group.items} />
+              <FaqList
+                locale={locale}
+                items={groupIndexes[index].map((itemIndex) => localizedFaqs[itemIndex])}
+              />
             </section>
           ))}
         </div>
@@ -67,32 +120,29 @@ export default function FaqPage() {
           <div>
             <p className="eyebrow">
               <BrandStar className="mini-star" />
-              Не нашли ответ?
+              {copy.noAnswer}
             </p>
-            <h2>Уточните свою ситуацию до визита</h2>
+            <h2>{copy.clarifyTitle}</h2>
           </div>
           <div>
-            <p>
-              Администратор поможет с организационными вопросами. При
-              сомнениях, связанных со здоровьем или препаратами, заранее
-              проконсультируйтесь с врачом.
-            </p>
+            <p>{copy.clarifyText}</p>
             <div className="inline-actions">
-              <Link className="button" href="/contacts">
-                Связаться
+              <Link className="button" href={localeHref(locale, "/contacts")}>
+                {copy.contact}
               </Link>
-              <Link className="text-link" href="/prices">
-                Сравнить услуги <span aria-hidden="true">→</span>
+              <Link className="text-link" href={localeHref(locale, "/prices")}>
+                {copy.compare} <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <CtaBand
-        title="Готовы выбрать время?"
-        text="Оставьте контакты — администратор уточнит детали, ответит на организационные вопросы и подтвердит запись."
-      />
+      <CtaBand locale={locale} title={copy.ctaTitle} text={copy.ctaText} />
     </main>
   );
+}
+
+export default function FaqPage() {
+  return <FaqPageContent locale="ru" />;
 }

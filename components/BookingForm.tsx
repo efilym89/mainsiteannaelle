@@ -1,7 +1,65 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { bookingGroups } from "@/data/site";
+import { getBookingGroups } from "@/data/site-i18n";
+import { getCopy, type Locale } from "@/lib/i18n";
+
+const formCopy = {
+  ru: {
+    sendError: "Не удалось отправить заявку.",
+    success: "Спасибо! Администратор свяжется с вами для подтверждения.",
+    retry: "Не удалось отправить заявку. Попробуйте ещё раз.",
+    name: "Ваше имя *",
+    namePlaceholder: "Как к вам обращаться?",
+    phone: "Номер телефона *",
+    contactMethod: "Как удобнее связаться?",
+    call: "Позвонить",
+    service: "Что вас интересует?",
+    helpChoose: "Помогите выбрать",
+    date: "Предпочтительная дата",
+    time: "Удобное время",
+    company: "Компания",
+    consent: "Я соглашаюсь с обработкой персональных данных для связи по заявке.",
+    sending: "Отправляем...",
+    submit: "Записаться онлайн",
+  },
+  uz: {
+    sendError: "So‘rovni yuborib bo‘lmadi.",
+    success: "Rahmat! Administrator tasdiqlash uchun siz bilan bog‘lanadi.",
+    retry: "So‘rov yuborilmadi. Iltimos, yana urinib ko‘ring.",
+    name: "Ismingiz *",
+    namePlaceholder: "Sizga qanday murojaat qilaylik?",
+    phone: "Telefon raqamingiz *",
+    contactMethod: "Qanday bog‘lanish qulay?",
+    call: "Qo‘ng‘iroq",
+    service: "Sizni nima qiziqtiradi?",
+    helpChoose: "Tanlashga yordam bering",
+    date: "Ma’qul sana",
+    time: "Qulay vaqt",
+    company: "Kompaniya",
+    consent: "So‘rov bo‘yicha bog‘lanish uchun shaxsiy ma’lumotlarim qayta ishlanishiga roziman.",
+    sending: "Yuborilmoqda...",
+    submit: "Onlayn yozilish",
+  },
+  en: {
+    sendError: "We could not send your request.",
+    success: "Thank you! An administrator will contact you to confirm.",
+    retry: "We could not send your request. Please try again.",
+    name: "Your name *",
+    namePlaceholder: "How should we address you?",
+    phone: "Phone number *",
+    contactMethod: "How should we contact you?",
+    call: "Phone call",
+    service: "What are you interested in?",
+    helpChoose: "Help me choose",
+    date: "Preferred date",
+    time: "Preferred time",
+    company: "Company",
+    consent: "I consent to the processing of my personal data so you can contact me about this request.",
+    sending: "Sending...",
+    submit: "Book online",
+  },
+} as const;
 
 function todayInTashkent() {
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -16,7 +74,15 @@ function todayInTashkent() {
   return `${values.year}-${values.month}-${values.day}`;
 }
 
-export function BookingForm({ initialService = "" }: { initialService?: string }) {
+export function BookingForm({
+  initialService = "",
+  locale = "ru",
+}: {
+  initialService?: string;
+  locale?: Locale;
+}) {
+  const copy = getCopy(locale, formCopy);
+  const bookingGroups = getBookingGroups(locale);
   const [selectedService, setSelectedService] = useState(initialService);
   const [submitState, setSubmitState] = useState<
     "idle" | "sending" | "success" | "error"
@@ -33,7 +99,10 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
     try {
       const response = await fetch("/api/booking", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "X-Annaelle-Locale": locale,
+        },
         body: JSON.stringify({
           name: data.get("name"),
           phone: data.get("phone"),
@@ -43,6 +112,7 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
           preferredTime: data.get("preferredTime"),
           company: data.get("company"),
           consent: data.get("consent") === "on",
+          locale,
         }),
       });
 
@@ -52,13 +122,13 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
       };
 
       if (!response.ok) {
-        throw new Error(result.error || "Не удалось отправить заявку.");
+        throw new Error(result.error || copy.sendError);
       }
 
       setSubmitState("success");
       setSubmitMessage(
         result.message ||
-          "Спасибо! Администратор свяжется с вами для подтверждения.",
+          copy.success,
       );
       form.reset();
       setSelectedService("");
@@ -67,7 +137,7 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
       setSubmitMessage(
         error instanceof Error
           ? error.message
-          : "Не удалось отправить заявку. Попробуйте ещё раз.",
+          : copy.retry,
       );
     }
   }
@@ -80,19 +150,19 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
     >
       <div className="form-row">
         <label>
-          <span>Ваше имя *</span>
+          <span>{copy.name}</span>
           <input
             name="name"
             type="text"
             autoComplete="name"
-            placeholder="Как к вам обращаться?"
+            placeholder={copy.namePlaceholder}
             minLength={2}
             maxLength={80}
             required
           />
         </label>
         <label>
-          <span>Номер телефона *</span>
+          <span>{copy.phone}</span>
           <input
             name="phone"
             type="tel"
@@ -107,25 +177,25 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
 
       <div className="form-row">
         <label>
-          <span>Как удобнее связаться?</span>
+          <span>{copy.contactMethod}</span>
           <select name="contactMethod" defaultValue="call">
-            <option value="call">Позвонить</option>
+            <option value="call">{copy.call}</option>
             <option value="telegram">Telegram</option>
             <option value="whatsapp">WhatsApp</option>
           </select>
         </label>
         <label>
-          <span>Что вас интересует?</span>
+          <span>{copy.service}</span>
           <select
             name="zone"
             value={selectedService}
             onChange={(event) => setSelectedService(event.target.value)}
           >
-            <option value="">Помогите выбрать</option>
+            <option value="">{copy.helpChoose}</option>
             {bookingGroups.map((group) => (
               <optgroup key={group.label} label={group.label}>
                 {group.options.map((item) => (
-                  <option key={item.id} value={item.value}>
+                  <option key={item.id} value={item.id}>
                     {item.label}
                   </option>
                 ))}
@@ -137,7 +207,7 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
 
       <div className="form-row">
         <label>
-          <span>Предпочтительная дата</span>
+          <span>{copy.date}</span>
           <input
             name="preferredDate"
             type="date"
@@ -145,7 +215,7 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
           />
         </label>
         <label>
-          <span>Удобное время</span>
+          <span>{copy.time}</span>
           <input
             name="preferredTime"
             type="time"
@@ -156,14 +226,14 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
       </div>
 
       <label className="honeypot" aria-hidden="true">
-        Компания
+        {copy.company}
         <input name="company" tabIndex={-1} autoComplete="off" />
       </label>
 
       <label className="consent">
         <input name="consent" type="checkbox" required />
         <span>
-          Я соглашаюсь с обработкой персональных данных для связи по заявке.
+          {copy.consent}
         </span>
       </label>
 
@@ -172,7 +242,7 @@ export function BookingForm({ initialService = "" }: { initialService?: string }
         type="submit"
         disabled={submitState === "sending"}
       >
-        {submitState === "sending" ? "Отправляем..." : "Записаться онлайн"}
+        {submitState === "sending" ? copy.sending : copy.submit}
         <span aria-hidden="true">↗</span>
       </button>
 

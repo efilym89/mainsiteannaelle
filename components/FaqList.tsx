@@ -1,15 +1,19 @@
 import { faqs } from "@/data/site";
+import { localizeSiteValue } from "@/data/site-i18n";
+import type { Locale } from "@/lib/i18n";
 
 export function FaqList({
   limit,
   category,
   items: providedItems,
+  locale = "ru",
 }: {
   limit?: number;
   category?: string;
   items?: ReadonlyArray<(typeof faqs)[number]>;
+  locale?: Locale;
 }) {
-  const source = providedItems ?? faqs;
+  const source = localizeSiteValue(providedItems ?? faqs, locale);
   const filtered = category
     ? source.filter((item) => item.category === category)
     : source;

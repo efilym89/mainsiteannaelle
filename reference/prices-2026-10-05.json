@@ -1,0 +1,199 @@
+{
+  "sourceDate": "2026-10-05",
+  "currency": "UZS",
+  "source": "User-provided photo_2026-10-05_10-04-45.jpg, 10-04-46.jpg, 10-04-46 (2).jpg, 10-04-47.jpg",
+  "sourceNote": "Специальные условия действуют после первого визита",
+  "singleZoneGroups": [
+    {
+      "code": "MINI",
+      "label": "Малые зоны",
+      "price": 95000,
+      "zones": [
+        "Подбородок",
+        "Верхняя губа",
+        "Ареолы сосков",
+        "Живот (дорожка)"
+      ]
+    },
+    {
+      "code": "MIDI",
+      "label": "Средние зоны",
+      "price": 299000,
+      "zones": [
+        "Ягодицы",
+        "Поясница",
+        "Подмышки",
+        "Руки до локтя",
+        "Руки выше локтя",
+        "Бёдра",
+        "Голени",
+        "Бикини классика"
+      ]
+    },
+    {
+      "code": "MAXI",
+      "label": "Большие зоны",
+      "price": 319000,
+      "zones": [
+        "Лицо полностью",
+        "Руки полностью",
+        "Грудь полностью",
+        "Глубокое бикини",
+        "Живот полностью"
+      ]
+    },
+    {
+      "code": "FULL",
+      "label": "Макси зоны",
+      "price": 399000,
+      "zones": [
+        "Ноги полностью",
+        "Спина полностью"
+      ]
+    }
+  ],
+  "combos": [
+    {
+      "code": "I",
+      "sourceTitle": "Подмышки, бикини/голени + зона mini",
+      "single": 588000,
+      "packages": {
+        "3": {
+          "total": 1645000,
+          "perVisitPrinted": 548333
+        },
+        "5": {
+          "total": 2590000,
+          "perVisitPrinted": 518000
+        },
+        "7": {
+          "total": 3360000,
+          "perVisitPrinted": 480000
+        },
+        "9": {
+          "total": 4025000,
+          "perVisitPrinted": 447222
+        }
+      }
+    },
+    {
+      "code": "II",
+      "sourceTitle": "Подмышки, бикини, голени + зона mini",
+      "single": 686000,
+      "packages": {
+        "3": {
+          "total": 1890000,
+          "perVisitPrinted": 630000
+        },
+        "5": {
+          "total": 3010000,
+          "perVisitPrinted": 602000
+        },
+        "7": {
+          "total": 3920000,
+          "perVisitPrinted": 560000
+        },
+        "9": {
+          "total": 4690000,
+          "perVisitPrinted": 521111
+        }
+      }
+    },
+    {
+      "code": "III",
+      "sourceTitle": "Подмышки, бикини, ноги полностью + зона mini",
+      "single": 763000,
+      "packages": {
+        "3": {
+          "total": 2170000,
+          "perVisitPrinted": 723333
+        },
+        "5": {
+          "total": 3360000,
+          "perVisitPrinted": 672000
+        },
+        "7": {
+          "total": 4270000,
+          "perVisitPrinted": 610000
+        },
+        "9": {
+          "total": 5180000,
+          "perVisitPrinted": 575556
+        }
+      }
+    },
+    {
+      "code": "IV",
+      "sourceTitle": "Подмышки, бикини, ноги полностью, руки полностью + зона mini",
+      "single": 840000,
+      "packages": {
+        "3": {
+          "total": 2450000,
+          "perVisitPrinted": 816667
+        },
+        "5": {
+          "total": 3780000,
+          "perVisitPrinted": 756000
+        },
+        "7": {
+          "total": 4970000,
+          "perVisitPrinted": 710000
+        },
+        "9": {
+          "total": 5950000,
+          "perVisitPrinted": 661111
+        }
+      }
+    },
+    {
+      "code": "V",
+      "sourceTitle": "Всё тело без ограничений",
+      "single": 1050000,
+      "packages": {
+        "3": {
+          "total": 3010000,
+          "perVisitPrinted": 1003333
+        },
+        "5": {
+          "total": 4620000,
+          "perVisitPrinted": 924000
+        },
+        "7": {
+          "total": 6090000,
+          "perVisitPrinted": 870000
+        },
+        "9": {
+          "total": 7210000,
+          "perVisitPrinted": 801111
+        }
+      }
+    }
+  ],
+  "firstVisitOffers": [
+    {
+      "code": "01",
+      "title": "Подмышки + бикини",
+      "price": 220000,
+      "condition": "Акция действует только на первое посещение"
+    },
+    {
+      "code": "02",
+      "title": "Бикини + подмышки + голени",
+      "price": 380000,
+      "condition": "Акция действует только на первое посещение"
+    },
+    {
+      "code": "03",
+      "title": "Все зоны без ограничений",
+      "price": 590000,
+      "condition": "Акция действует только на первое посещение"
+    }
+  ],
+  "uncertainties": [
+    "Комбо I uses a slash between bikini and calves; preserve source wording or clarify that this means a choice. Do not silently list both as included.",
+    "The source does not distinguish classic versus deep bikini in combos and offers; do not invent a subtype.",
+    "The source gives a price per single-zone group and lists its areas. Do not sell every area in a group as one bundle.",
+    "Source footnote says special conditions apply after first visit. First-visit offers have their own explicit first-visit-only condition.",
+    "Per-visit figures printed in the source are rounded to whole sums; package totals should be authoritative. No substantive arithmetic discrepancies found."
+  ]
+}

@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { MobileStickyCta } from "@/components/MobileStickyCta";
+import { SkipLink } from "@/components/SkipLink";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { contact } from "@/data/site";
+import { localeDocumentLang, localeFromPathname } from "@/lib/i18n";
 import "./globals.css";
 
 const siteUrl = "https://annaelle-studio.efilym.chatgpt.site";
@@ -85,14 +88,24 @@ const localBusinessJsonLd = {
   sameAs: [contact.instagram],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const pathname = requestHeaders.get("x-annaelle-pathname") ?? "/";
+  const documentLang = localeDocumentLang[localeFromPathname(pathname)];
+
   return (
-    <html lang="ru">
+    <html lang={documentLang} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(()=>{const s=location.pathname.split('/').filter(Boolean)[0];document.documentElement.lang=s==='uz'?'uz-Latn':s==='en'?'en':'ru'})()",
+          }}
+        />
         <link
           rel="preload"
           href="/fonts/manrope-cyrillic.woff2"
@@ -129,9 +142,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <a className="skip-link" href="#main-content">
-          Перейти к содержанию
-        </a>
+        <SkipLink />
         <SiteHeader />
         {children}
         <SiteFooter />

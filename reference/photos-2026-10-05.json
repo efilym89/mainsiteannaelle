@@ -1,0 +1,158 @@
+[
+  {
+    "displayFilename": "home-offer-laser-hero.webp",
+    "fullPath": "full/home-offer-laser-hero.jpg",
+    "sourceId": "BSA08058",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "e73574e33c996b70f6ecfae6e8dd7fabcc4726b48484762b3231a07592f34d89",
+    "displaySHA256": "07c5caaa58c35e245df2f444d051db55c3b71e5570c63f9e21946560af683a2d",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "offer-three-zones.webp",
+    "fullPath": "full/offer-three-zones.jpg",
+    "sourceId": "BSA08139",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "3252e629193b4125e3b6d2eefb4ed1a756a6e04846c4efdc40a37309591d200b",
+    "displaySHA256": "0feca33ad47b4bff867ca4d9e5f70371c89ef20f3ce4bd2ba0c2c13a13a09173",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "offer-all-zones.webp",
+    "fullPath": "full/offer-all-zones.jpg",
+    "sourceId": "BSA08144",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "959b439cc5f4e9c6b8935744865c53ebe260c0a6484aca81a9d2387c1bf0bc44",
+    "displaySHA256": "4ba7ca998320685094341ff55de553d2a9b836fd9d738392d32bad6f90d7f26e",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "reviews-hero.webp",
+    "fullPath": "full/reviews-hero.jpg",
+    "sourceId": "BSA08146",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "25b13676da04fadb5a73e1fddb25ff735af1b03a566bd988f1f2548ebde5e05b",
+    "displaySHA256": "db0dc6ff7ced99838f824009c26059758b17c716bba7f66137027c0fd6838fae",
+    "dimensions": [
+      2560,
+      1707
+    ]
+  },
+  {
+    "displayFilename": "specialists-care-original-bsa08192.webp",
+    "fullPath": "full/specialists-care-original-bsa08192.jpg",
+    "sourceId": "BSA08192",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "7af00f1108f9ea7907c6361ab0e0eb22d65e6be0ff6637bdd720a5868c33d2a6",
+    "displaySHA256": "2a6be4da8f3b321f95d75c25e13343f1f1be9f4532d332761596f5cfbcc0e6f6",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "offer-underarms-detail.webp",
+    "fullPath": "full/offer-underarms-detail.jpg",
+    "sourceId": "BSA08076",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "b948585cce59184f8cefcef7fa9b04f4b149b0b04b3c86b09c09f3e85c835dd0",
+    "displaySHA256": "d8b61e0b7b17812e1b6befb390bfd32651cadbad542585e859a7fe5f10d615e4",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "offer-legs-detail.webp",
+    "fullPath": "full/offer-legs-detail.jpg",
+    "sourceId": "BSA08127",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "4d6506c8dc9968509112a995583cc09b03a0f290ccbd490493b4fd1dc7511185",
+    "displaySHA256": "2104907c70d7ac9c3138d3a8c27056341535a5306ecec15764ffd73a6975d0dd",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "offer-face-detail.webp",
+    "fullPath": "full/offer-face-detail.jpg",
+    "sourceId": "BSA08039",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "6bf2c2387c81f5e00c5df6d2529322fea57cbddd0db2eddb7ec3ea940eeb0b3c",
+    "displaySHA256": "8ab5203a3bc09fa3f972f22e77ab4fc0a811a03eaa46c04714b277b58ac624e0",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "specialist-portrait.webp",
+    "fullPath": "full/specialist-portrait.jpg",
+    "sourceId": "BSA08230",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "b64b2c8634469de17c23ff42705f6dafc8859f765308b4ac330e9a12a8e63f5e",
+    "displaySHA256": "b0d2e27eda09913fa79dbcc7c2c195bbf1b45cc8e362d65dfd2365fecbe79203",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "visit-consultation.webp",
+    "fullPath": "full/visit-consultation.jpg",
+    "sourceId": "BSA08109",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "93804a5e06c6dd4a0bcb585f8bcbea4a366595bd8a0cb96a0d5d604aa4aebb99",
+    "displaySHA256": "9bc60b655ff0a337793702f5a5e949625c483caa04e5e149dd0ffbed977129a9",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "prices-guest.webp",
+    "fullPath": "full/prices-guest.jpg",
+    "sourceId": "BSA07994",
+    "sourceVariant": "Контент цвет 3",
+    "sourceSHA256": "bbe93f571740b9545a7f13918de7c57084333a6bde650631620b605769ad27cd",
+    "displaySHA256": "ac44a89648fc8f4343cfa2951d2359b8688907c9c84cc4839be76b1b067912e6",
+    "dimensions": [
+      1707,
+      2560
+    ]
+  },
+  {
+    "displayFilename": "studio-welcome.webp",
+    "fullPath": "full/studio-welcome.jpg",
+    "sourceId": "800_8728-HDR",
+    "sourceVariant": "Салон 1",
+    "sourceSHA256": "be02f040f5232f5c62e604c8c77d7d529483a6666e12833d05651a78b79b22c1",
+    "displaySHA256": "a7d88da5f2c8bf64af04b9cb83fe6b8876e199f72a3c04c3ee24f500cb745a3a",
+    "dimensions": [
+      2560,
+      1709
+    ]
+  },
+  {
+    "displayFilename": "studio-cabinet.webp",
+    "fullPath": "full/studio-cabinet.jpg",
+    "sourceId": "800_8532-HDR",
+    "sourceVariant": "Салон 1",
+    "sourceSHA256": "e303b35d5d833d02dcd46a3bc3127e3d46753f1815eade3cce597f5690bf27ba",
+    "displaySHA256": "9624fdc810b8177da24d55cff713a412fa2f0e34fbe3783c9e8b49ef07de08d6",
+    "dimensions": [
+      2560,
+      1709
+    ]
+  }
+]

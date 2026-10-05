@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 const siteUrl = "https://annaelle-studio.efilym.chatgpt.site";
-const routes = [
+const rootRoutes = [
   "/",
   "/services",
   "/prices",
@@ -13,6 +13,12 @@ const routes = [
   "/faq",
   "/contacts",
   "/booking",
+];
+const routes = [
+  ...rootRoutes,
+  ...["uz", "en"].flatMap((locale) =>
+    rootRoutes.map((route) => `/${locale}${route === "/" ? "" : route}`),
+  ),
 ];
 const developmentPreviewMeta =
   /<meta(?=[^>]*\bname=["']codex-preview["'])(?=[^>]*\bcontent=["']development["'])[^>]*>/i;
@@ -64,7 +70,16 @@ test("renders every public route with production metadata and one H1", async () 
     const canonical = route === "/" ? `${siteUrl}/` : `${siteUrl}${route}`;
 
     assert.doesNotMatch(html, developmentPreviewMeta, route);
-    assert.match(html, /<html\b[^>]*\blang=["']ru["']/i, route);
+    const expectedLang = route === "/uz" || route.startsWith("/uz/")
+      ? "uz-Latn"
+      : route === "/en" || route.startsWith("/en/")
+        ? "en"
+        : "ru";
+    assert.match(
+      html,
+      new RegExp(`<html\\b[^>]*\\blang=["']${expectedLang}["']`, "i"),
+      route,
+    );
     assert.match(html, /<meta\b[^>]*\bname=["']viewport["']/i, route);
     assert.match(
       html,
@@ -72,10 +87,40 @@ test("renders every public route with production metadata and one H1", async () 
       route,
     );
     assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, route);
+    assert.match(
+      html,
+      /<meta\b[^>]*\bproperty=["']og:title["'][^>]*\bcontent=["'][^"']+["']/i,
+      route,
+    );
+    assert.match(
+      html,
+      /<meta\b[^>]*\bname=["']twitter:title["'][^>]*\bcontent=["'][^"']+["']/i,
+      route,
+    );
 
-    if (route === "/") {
+    if (expectedLang !== "ru") {
+      const socialTitles = [
+        ...html.matchAll(
+          /<meta\b[^>]*(?:property=["']og:title["']|name=["']twitter:title["'])[^>]*\bcontent=["']([^"']+)["'][^>]*>/gi,
+        ),
+      ].map((match) => match[1]);
+      assert.equal(socialTitles.length, 2, route);
+      assert.doesNotMatch(socialTitles.join(" "), /[А-Яа-яЁё]/, route);
+    }
+
+    if (route === "/" || route === "/uz" || route === "/en") {
       assert.match(html, /src=["']\/images\/home-hero\.webp["']/i);
       assert.doesNotMatch(html, /\/_vinext\/image\?/i);
+    }
+
+    if (route === "/uz") {
+      assert.match(html, /Bosh sahifa/i);
+      assert.match(html, /href=["']\/en["']/i);
+    }
+
+    if (route === "/en") {
+      assert.match(html, />Home</i);
+      assert.match(html, /href=["']\/uz["']/i);
     }
   }
 });

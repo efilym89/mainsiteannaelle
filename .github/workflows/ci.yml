@@ -1,0 +1,27 @@
+name: Validate site
+
+on:
+  push:
+    branches: [main, agent/github-preview]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.13.0
+          cache: npm
+      - run: npm ci
+      - run: npm run preview:github
+      - run: node --test tests/preview-pricing.test.mjs tests/preview-seo.test.mjs
+      - run: git diff --exit-code -- docs
+      - run: npm run lint
+      - run: npm test

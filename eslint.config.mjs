@@ -11,6 +11,8 @@ const eslintConfig = defineConfig([
     ".next/**",
     "out/**",
     "build/**",
+    // Classic browser scripts are syntax-checked by preview:github.
+    "preview-site/**",
     "next-env.d.ts",
   ]),
 ]);
